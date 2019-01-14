@@ -7,10 +7,12 @@
     <title>TIME LINE CINEMA</title>
 
     <script src="js/jQuery/jQuery-3-3-1.js"></script>
+    <script src="js/jQuery-ui-1.12.1/jquery-ui.min.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Montserrat:300" rel="stylesheet">
     <link rel="stylesheet" href="assets/Skeleton-2.0.4/css/normalize.css"/>
     <link rel="stylesheet" href="assets/Skeleton-2.0.4/css/skeleton.css"/>
     <link rel="stylesheet" href="assets/css/style.css"/>
+    <script src="js/config.js"></script>
 </head>
 <body>
     <header>
@@ -26,45 +28,20 @@
 
     <hr class="clear"/>
     <div id="handPlayer" class="hand">
-          <div class="cardContainer" id="cardContainer-1">
-              <div class="card" id="card-1">
-                  <div id="imgTarget-1" class="imgTarget"></div>
-                  <div class="getCardButton" id="getCardButton-1">
+          <div class="cardContainer" id="cardContainer-0">
+              <div class="card" id="card-0">
+                  <div id="imgTarget-0" class="imgTarget"></div>
+                  <div class="getCardButton" id="getCardButton-0">
                     <br/>
                     Select<br/>a card
                   </div>
               </div>
-              <div class="cardElement" id="cardElement-1">
-
-              </div>
-          </div>
-
-          <div class="cardContainer" id="cardContainer-2">
-              <div class="card" id="card-2">
-                  <div id="imgTarget-2" class="imgTarget"></div>
-                  <div class="getCardButton" id="getCardButton-2">
-                    <br/>
-                    Select<br/>a card
-                  </div>
-              </div>
-              <div class="cardElement" id="cardElement-2">
-
-              </div>
-          </div>
-
-          <div class="cardContainer" id="cardContainer-3">
-              <div class="card" id="card-3">
-                  <div id="imgTarget-3" class="imgTarget"></div>
-                  <div class="getCardButton" id="getCardButton-3">
-                    <br/>
-                      Select<br/>a card
-                  </div>
-              </div>
-              <div class="cardElement" id="cardElement-3">
+              <div class="cardElement" id="cardElement-0">
 
               </div>
           </div>
     </div>
+
     <br/><br/><br/>
     <hr class="clear"/>
 
@@ -79,8 +56,13 @@
           <a href="http://elearning/TimeLine/index.html">RECOMMENCER ?</a>
         </button>
     </div>
-    <script src="js/jQuery-ui-1.12.1/jquery-ui.min.js"></script>
+    <script src="js/card.js"></script>
+    <script src="js/eventController.js"></script>
+
+    <script src="js/gameManager.js"></script>
     <script src="js/main.js"></script>
+
+
 
 </body>
 </html>
