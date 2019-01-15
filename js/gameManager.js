@@ -107,6 +107,7 @@ class GameManager
         var sorted = $( "#handPlayer" ).sortable( "toArray");
         var sorted_dateKey = new Array();
 
+        // create the sorted_dateKey
         for(let i = 0; i<sorted.length; i++)
         {
             let sorted_id = sorted[i].split('-')[1];
@@ -132,7 +133,6 @@ class GameManager
                  game.win = 0
               }
           }
-
         }
 
         this.showResult();
