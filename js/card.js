@@ -4,21 +4,27 @@
  */
 class Card {
   constructor(id) {
+
+    // card attributs
     this.id = id;
     this.containerId;
     this.cardId;
     this.imgTarget;
     this.getCardButton;
     this.cardElementId;
-    this.id;
+
+    // movie informations
     this.imgSrc;
+    this.title;
+    this.dateKey;
+    this.release_date;
 
     this.deg = 0;
 
-    this.setElements();
+    this.setIdCss();
   }
 
-  setElements() {
+  setIdCss() {
     this.containerId = "cardContainer-" + this.id;
     this.cardId = "card-" + this.id;
     this.imgTarget = "imgTarget-" + this.id;
@@ -37,6 +43,14 @@ class Card {
     newCont.children('.cardElement').attr('id', 'cardElement-' + this.id);
 
     $('#handPlayer').append(newCont);
+  }
+
+  hydrateFromMovie(data)
+  {
+      this.imgSrc = "https://image.tmdb.org/t/p/w500"+data.poster_path;
+      this.title  = data.title;
+      this.dateKey = data.release_date.replace(/-/g, '');
+      this.release_date = data.release_date;
   }
 
   rotate(element)

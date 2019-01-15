@@ -69,15 +69,12 @@ class GameManager
                 game.findRandomMovie(card_id);
             }
 
-            // create img src
-            currentCard.imgSrc = "https://image.tmdb.org/t/p/w500"+data.poster_path;
+            // hydrate card
+            currentCard.hydrateFromMovie(data);
 
             // add img and return it
             currentCard.returnCard();
             $("#imgTarget-"+card_id).addClass('cardMovie');
-
-            // add data movie to array
-            game.movies[currentCard.id] = data;
 
             game.nbMovies = game.nbMovies+1;
 
@@ -108,19 +105,17 @@ class GameManager
         let game = this;
 
         var sorted = $( "#handPlayer" ).sortable( "toArray");
-        var sorted_movies = new Array();
+        var sorted_dateKey = new Array();
 
         for(let i = 0; i<sorted.length; i++)
         {
-            let m = new Array();
             let sorted_id = sorted[i].split('-')[1];
-            let dateKey = game.movies[sorted_id].release_date.replace(/-/g, '');
-            let release_date = game.movies[sorted_id].release_date;
-            let title = game.movies[sorted_id].title;
-            m = [title, release_date, dateKey ];
-            sorted_movies[i] = m;
+            let currentCard = game.retrieveCard(sorted_id);
 
-            let releaseDateFormat = $.datepicker.formatDate('dd M yy', new Date(release_date));
+            sorted_dateKey[i] = currentCard.dateKey;
+
+            let title = currentCard.title;
+            let releaseDateFormat = $.datepicker.formatDate('dd M yy', new Date(currentCard.release_date));
 
             // show cardElement
             $('.cardElement').show();
@@ -130,10 +125,10 @@ class GameManager
         }
 
         // compare dateKey
-        for(let j= 0; j<sorted_movies.length; j++)
-        {   if(sorted_movies[j+1]) {
+        for(let j= 0; j<sorted_dateKey.length; j++)
+        {   if(sorted_dateKey[j+1]) {
               // if first datekey is bigger than next
-              if(sorted_movies[j][2] > sorted_movies[j+1][2]) {
+              if(sorted_dateKey[j] > sorted_dateKey[j+1]) {
                  game.win = 0
               }
           }
