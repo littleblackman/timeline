@@ -12,8 +12,12 @@ class GameManager
         this.movies     = new Array();
         this.win        = 1;
         this.eventController = new EventController(this);
+        this.point      = 0;
+        this.round      = 1;
+        this.step       = 20;
     }
 
+    // create the cards
     createCards()
     {
         let cards = new Array();
@@ -27,6 +31,7 @@ class GameManager
         this.cards = cards;
     }
 
+    // retrieve a card
     retrieveCard(card_id)
     {
         let id = parseInt(card_id);
@@ -34,11 +39,13 @@ class GameManager
         return cards[id];
     }
 
+    // init the event listenner
     initEvents()
     {
         this.eventController.init();
     }
 
+    // find a random id movie
     findRandomMovie(card_id){
          let game = this;
          let latestMovieUrl = "https://api.themoviedb.org/3/movie/latest";
@@ -51,7 +58,7 @@ class GameManager
        });
     }
 
-
+    // retrieve a movie
     retrieveMovie(card_id, randomId)
     {
         let currentCard = this.retrieveCard(card_id);
@@ -79,7 +86,7 @@ class GameManager
             game.nbMovies = game.nbMovies+1;
 
             if(game.nbMovies  === game.limit) {
-                game.startGame();
+                game.startSortableParty();
             }
 
         // if case of 404 select another movie
@@ -88,10 +95,11 @@ class GameManager
         });
     }
 
-    startGame()
+    // start game when all cards are founded
+    startSortableParty()
     {
         // stop card cardAnimation
-        $('.card').removeClass('cardAnimation');
+        //$('.card').removeClass('cardAnimation');
 
         // active sortable
         this.eventController.sortableInit();
@@ -100,6 +108,39 @@ class GameManager
         $('#validAnswer').show();
     }
 
+    // reset data when game continue
+    gameContinue()
+    {
+
+        console.log('remove');
+        // remove cards
+        for(let i = 1; i < this.limit; i++) {
+            $('#cardContainer-'+i).remove();
+            console.log('#cardContainer-'+i);
+        }
+        // remove img0
+        $('#img0').remove();
+
+        // remove element
+        $('.cardElement').empty();
+        $('.cardElement').hide();
+
+        // start game
+        this.startGame();
+
+    }
+
+
+    startGame(nb)
+    {
+        //
+        $('.card').addClass('cardAnimation');
+        $('#validAnswer').show();
+        this.createCards();
+        this.initEvents();
+    }
+
+    // verif result
     checkResult()
     {
         let game = this;
@@ -135,19 +176,59 @@ class GameManager
           }
         }
 
-        this.showResult();
+        this.calculResult();
     }
 
-    showResult()
+    // calcul result
+    calculResult()
     {
-        $('#startAgain').show();
-        $('#validAnswerButton').hide();
+        let win   = this.win
+        let point = this.point;
+        let step  = this.step;
+        let round = this.round;
+        let resultMessage;
+        let limit = this.limit;
 
-        if(this.win == 1) {
-            $('#result').html('<h2>Gagné</h2>');
+        // if win == 1
+        if(win == 1)
+        {
+            // calcul point
+            point = point + step;
+            round = round + 1;
+            $('#points').html(point);
+            $('#round').html(round);
+
+
+            // step and round
+            if(round > 6 )  { step = 15};
+            if(round > 10 ) { step = 10};
+            if(round > 20 ) { step = 5};
+
+            // change limit
+            if(round > 4)  { limit = limit + 1 }
+            if(round > 8)  { limit = limit + 1 }
+            if(round > 12) { limit = limit + 1 }
+            if(round > 16) { limit = limit + 1 }
+
+            // resultMessage
+            resultMessage = '<h2>Gagné</h2>';
+            $('#goOn').show();
+
         } else {
-            $('#result').html('<h2>Perdu<h2>');
+            // resultMessage
+            resultMessage = '<h2>Perdu</h2>';
+            $('#newGame').show();
         }
+
+        // show bar information result
+        $('#validAnswerButton').hide();
+        $('#result').html(resultMessage);
+
+        // update data
+        this.point = point;
+        this.round = round;
+        this.limit = limit;
+
     }
 
 }

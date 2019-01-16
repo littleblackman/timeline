@@ -12,6 +12,7 @@ class EventController
       let game = this.game;
 
       $('#handPlayer > .cardContainer > .card').hover(function(){
+          console.log('hover');
           let card = $(this);
           let card_id = card.attr('id').split('-')[1];
           $('#card-'+card_id).addClass('shadowIn')
@@ -19,6 +20,8 @@ class EventController
 
       $('#handPlayer > .cardContainer > .card').mouseleave(function()
       {
+          console.log('leave');
+
         let card = $(this);
         let card_id = card.attr('id').split('-')[1];
         $('#card-'+card_id).removeClass('shadowIn');
@@ -45,6 +48,14 @@ class EventController
       {
           let card_id = $(this).attr('id').split('-')[1];
           game.findRandomMovie(card_id);
+      })
+
+      $('#goOn').click(function(){
+          game.gameContinue();
+      })
+
+      $('#newGame').click(function() {
+          game.gameContinue();
       })
 
     }

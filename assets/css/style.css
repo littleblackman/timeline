@@ -4,10 +4,13 @@
 
 /* common parts of document */
 body { width: 90%; margin: 0 auto ; font-family: Montserrat, sans-serif;}
-nav { float: left; padding-top: 20px;}
 h1 { float: right;display: inline }
 .clear { clear: both }
 a {color: white}
+a:hover { text-decoration: none}
+header { display: flex ; justify-content: space-between; flex-wrap: wrap; padding-top: 20px}
+.gameInfo { padding: 8px; border: 1px solid grey; padding: 18px}
+.gameTxt { font-size: 1.6em; margin-right: 10px; font-weight: bold}
 
 /* card & handplayer */
 .hand { display: flex ; justify-content: space-between; flex-wrap: wrap;}
@@ -41,4 +44,5 @@ a {color: white}
 }
 
 #validAnswer { text-align: center; margin-top: 50px; display: none;}
-#startAgain {display: none}
+#newGame {display: none}
+#goOn { display: none}
