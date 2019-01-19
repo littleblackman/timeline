@@ -159,9 +159,10 @@ class GameManager
     startGame()
     {
 
+        $('.cardElement').empty();
+
         // remove Cardelement
         if(this.mode != "dev") {
-            $('.cardElement').empty();
             $('.cardElement').hide();
         } else {
             console.log('--------');
