@@ -66,7 +66,15 @@ hr { border: 2px solid white;}
 
 /*** information game nav *****/
 
+
 #result { text-align: center; background-color: rgba(255, 255, 255, 0.90); height: 60px; padding-top: 4px; border-top: 2px solid white; border-bottom: 2px solid white}
-#validAnswer { text-align: center; margin-top: 50px;}
+#validAnswer {  text-align: center;
+                background-color: rgba(255, 255, 255, 0.8);
+                padding: 10px 0px 30px 0px;
+                margin-top: 20px;
+                border-radius: 20px
+              }
 #newGame {display: none}
 #goOn { display: none}
+button { border-radius: 0px; margin: 10px 0px 10px 0px; border: 0px black solid; background-color: black; font-weight: bold; color: white;}
+button:hover { color: red}
