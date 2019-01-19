@@ -12,7 +12,6 @@ class EventController
       let game = this.game;
 
       $('#handPlayer > .cardContainer > .card').hover(function(){
-          console.log('hover');
           let card = $(this);
           let card_id = card.attr('id').split('-')[1];
           $('#card-'+card_id).addClass('shadowIn')
@@ -20,8 +19,6 @@ class EventController
 
       $('#handPlayer > .cardContainer > .card').mouseleave(function()
       {
-          console.log('leave');
-
         let card = $(this);
         let card_id = card.attr('id').split('-')[1];
         $('#card-'+card_id).removeClass('shadowIn');
@@ -50,14 +47,18 @@ class EventController
           game.findRandomMovie(card_id);
       })
 
-      $('#goOn').click(function(){
-          game.gameContinue();
-      })
+    }
 
-      $('#newGame').click(function() {
-          game.gameContinue();
-      })
+    stopEvent() {
 
+      $('#handPlayer > .cardContainer > .card').off('hover');
+      $('#handPlayer > .cardContainer > .card').off('mouseleave');
+      $('#handPlayer > .cardContainer > .card >.getCardButton').off('mouseenter');
+      $('#handPlayer > .cardContainer > .card > .getCardButton').off('mouseleave');
+      $('#handPlayer > .cardContainer > .card >.getCardButton').off('click');
+      $('#validAnswerButton').off('click');
+      $('#goOn').off('click');
+      $('#newGame').off('click');
     }
 
     sortableInit()
@@ -73,10 +74,18 @@ class EventController
         });
         $('#handPlayer').disableSelection();
 
-        /*** valid order ****/
+        /*** valid order & continue options ****/
         $('#validAnswerButton').click(function() {
             game.checkResult();
         });
+
+        $('#goOn').click(function(){
+            game.gameContinue();
+        })
+
+        $('#newGame').click(function() {
+            game.gameContinue();
+        })
 
     }
 

@@ -51,7 +51,17 @@ class Card {
       this.title  = data.title;
       this.dateKey = data.release_date.replace(/-/g, '');
       this.release_date = data.release_date;
+
+      this.releaseDateFormat = $.datepicker.formatDate('dd M yy', new Date(this.release_date));
+
   }
+
+  appendElementMovie()
+  {
+      $('#'+this.containerId+' > .cardElement').html('<h6 style="font-weight: bold">'+this.title+'</h6>');
+      $('#'+this.containerId+' > .cardElement').append('<h7>'+this.releaseDateFormat+'</h7>');
+  }
+
 
   rotate(element)
   {

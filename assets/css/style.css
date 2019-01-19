@@ -32,7 +32,7 @@ header { display: flex ; justify-content: space-between; flex-wrap: wrap; paddin
 
 .cardAnimation {   animation-name: returnCard; animation-duration: 0.3s;}
 
-.cardElement { display: none; text-align: center}
+.cardElement { display: visible; text-align: center}
 
 @keyframes returnCard {
   0% {

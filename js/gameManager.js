@@ -3,23 +3,29 @@
 class GameManager
 {
     constructor(handPlayer, moviedb, apiKey) {
+        this.eventController = new EventController(this);
         this.handPlayer = handPlayer;
         this.moviedb    = moviedb;
-        this.nbMovies   = 0;
-        this.limit      = 3;
         this.apiKey     = apiKey;
         this.cards      = new Array();
         this.movies     = new Array();
-        this.win        = 1;
-        this.eventController = new EventController(this);
-        this.point      = 0;
-        this.round      = 1;
-        this.step       = 20;
+
+        this.nbMovies = 0;
+        this.win = 1;
+
+        this.point = 0;
+        this.round = 1;
+        this.limit = 3;
+        this.step = 20;
+
+        this.mode = 'prod';
+        //this.mode = 'dev';
     }
 
     // create the cards
     createCards()
     {
+
         let cards = new Array();
         let originCard = new Card(0);
         cards[0] = originCard;
@@ -37,6 +43,13 @@ class GameManager
         let id = parseInt(card_id);
         let cards = this.cards;
         return cards[id];
+    }
+
+    deleteCard(card_id)
+    {
+        let id = parseInt(card_id);
+        let cards = this.cards;
+        delete cards[id];
     }
 
     // init the event listenner
@@ -65,7 +78,6 @@ class GameManager
         let game        = this;
         let url         = game.moviedb+randomId;
 
-
         // retrieve the movie
         $.get(
             url,{ api_key : game.apiKey, language : "fr" }
@@ -78,6 +90,8 @@ class GameManager
 
             // hydrate card
             currentCard.hydrateFromMovie(data);
+
+            currentCard.appendElementMovie();
 
             // add img and return it
             currentCard.returnCard();
@@ -99,31 +113,42 @@ class GameManager
     startSortableParty()
     {
         // stop card cardAnimation
-        //$('.card').removeClass('cardAnimation');
+        $('.card').removeClass('cardAnimation');
 
         // active sortable
         this.eventController.sortableInit();
 
         // show button validation
         $('#validAnswer').show();
+        $('#validAnswerButton').show();
+
+
     }
 
     // reset data when game continue
     gameContinue()
     {
 
-        console.log('remove');
+        //removeClass
+        $(".imgTarget").removeClass('cardMovie');
+        $('.card').addClass('cardAnimation');
+
         // remove cards
         for(let i = 1; i < this.limit; i++) {
             $('#cardContainer-'+i).remove();
-            console.log('#cardContainer-'+i);
         }
+
+        // restore cards
+        this.cards = new Array();;
+
         // remove img0
         $('#img0').remove();
 
-        // remove element
-        $('.cardElement').empty();
-        $('.cardElement').hide();
+        this.eventController.stopEvent();
+
+
+        $('#result').empty();
+        $('.partyButton').hide();
 
         // start game
         this.startGame();
@@ -131,13 +156,37 @@ class GameManager
     }
 
 
-    startGame(nb)
+    startGame()
     {
-        //
+
+        // remove Cardelement
+        if(this.mode != "dev") {
+            $('.cardElement').empty();
+            $('.cardElement').hide();
+        } else {
+            console.log('--------');
+
+            console.log('mode = dev');
+            console.log('start game');
+            // show vars
+            console.log('point: '+this.point);
+            console.log('round: '+this.round);
+            console.log('limit: '+this.limit);
+            console.log('step: '+this.step);
+            console.log('win: '+this.win);
+            console.log('nbMovies: '+this.nbMovies);
+            console.log('--------');
+        }
+
+
         $('.card').addClass('cardAnimation');
-        $('#validAnswer').show();
         this.createCards();
         this.initEvents();
+
+        // init for each set
+        this.win = 1;
+        this.nbMovies = 0;
+
     }
 
     // verif result
@@ -156,13 +205,8 @@ class GameManager
 
             sorted_dateKey[i] = currentCard.dateKey;
 
-            let title = currentCard.title;
-            let releaseDateFormat = $.datepicker.formatDate('dd M yy', new Date(currentCard.release_date));
-
             // show cardElement
             $('.cardElement').show();
-            $('#'+sorted[i]+' > .cardElement').html('<h5>'+title+'</h5>');
-            $('#'+sorted[i]+' > .cardElement').append('<h6>'+releaseDateFormat+'</h6>');
 
         }
 
@@ -177,6 +221,12 @@ class GameManager
         }
 
         this.calculResult();
+    }
+
+    showPointAndRound()
+    {
+        $('#points').html(this.point);
+        $('#round').html(this.round);
     }
 
     // calcul result
@@ -194,20 +244,17 @@ class GameManager
         {
             // calcul point
             point = point + step;
-            round = round + 1;
-            $('#points').html(point);
-            $('#round').html(round);
-
+            round ++;
 
             // step and round
-            if(round > 6 )  { step = 15};
-            if(round > 10 ) { step = 10};
+            if(round > 6 && round < 10)  { step = 15};
+            if(round > 10 && round < 20) { step = 10};
             if(round > 20 ) { step = 5};
 
             // change limit
-            if(round > 4)  { limit = limit + 1 }
-            if(round > 8)  { limit = limit + 1 }
-            if(round > 12) { limit = limit + 1 }
+            if(round > 4 && round < 8)  { limit = limit + 1 }
+            if(round > 8 && round < 12)  { limit = limit + 1 }
+            if(round > 12 && round < 16) { limit = limit + 1 }
             if(round > 16) { limit = limit + 1 }
 
             // resultMessage
@@ -218,6 +265,13 @@ class GameManager
             // resultMessage
             resultMessage = '<h2>Perdu</h2>';
             $('#newGame').show();
+
+            // init value
+            point = 0;
+            round = 1;
+            limit = 3;
+            step  = 20;
+
         }
 
         // show bar information result
@@ -228,6 +282,9 @@ class GameManager
         this.point = point;
         this.round = round;
         this.limit = limit;
+        this.step  = step;
+
+        this.showPointAndRound();
 
     }
 
