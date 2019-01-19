@@ -18,8 +18,11 @@ class GameManager
         this.limit = 3;
         this.step = 20;
 
+        // extend
+        this.limit2 = 4;
+        this.limit3 = 5;
+        this.limit4 = 6;
         this.mode = 'prod';
-        //this.mode = 'dev';
     }
 
     // create the cards
@@ -119,7 +122,6 @@ class GameManager
         this.eventController.sortableInit();
 
         // show button validation
-        $('#validAnswer').show();
         $('#validAnswerButton').show();
 
 
@@ -160,6 +162,8 @@ class GameManager
     {
 
         $('.cardElement').empty();
+
+        $('#validAnswerButton').hide();
 
         // remove Cardelement
         if(this.mode != "dev") {
@@ -239,6 +243,7 @@ class GameManager
         let round = this.round;
         let resultMessage;
         let limit = this.limit;
+        let game = this;
 
         // if win == 1
         if(win == 1)
@@ -248,15 +253,20 @@ class GameManager
             round ++;
 
             // step and round
-            if(round > 6 && round < 10)  { step = 15};
-            if(round > 10 && round < 20) { step = 10};
-            if(round > 20 ) { step = 5};
+            if(round > 5 && round < 9)  {
+                step = 25;
+                limit = game.limit2;
+            };
 
-            // change limit
-            if(round > 4 && round < 8)  { limit = limit + 1 }
-            if(round > 8 && round < 12)  { limit = limit + 1 }
-            if(round > 12 && round < 16) { limit = limit + 1 }
-            if(round > 16) { limit = limit + 1 }
+            if(round >  9 ) {
+                step = 30;
+                limit = game.limit3;
+            };
+
+            if( round == 11 )
+            {
+                alert('game over');
+            }
 
             // resultMessage
             resultMessage = '<h2>Gagné</h2>';

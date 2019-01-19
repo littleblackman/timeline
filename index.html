@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>TIME LINE CINEMA</title>
+    <title>ANACHRONIE CINEMA</title>
 
     <script src="js/jQuery/jQuery-3-3-1.js"></script>
     <script src="js/jQuery-ui-1.12.1/jquery-ui.min.js"></script>
@@ -16,13 +16,9 @@
 </head>
 <body>
     <header>
-        <nav>
-            <button class="button-primary">
-              <a href="http://elearning/TimeLine/index.html">
-                home
-              </a>
-            </button>
-        </nav>
+
+        <h1>ANACHRONIE MOVIE</h1>
+
         <div>
             <span class="gameTxt">Points</span>
             <span id="points" class="gameInfo">0</span>
@@ -31,43 +27,39 @@
             <span class="gameTxt">Tours</span>
             <span id="round" class="gameInfo">1</span>
         </div>
-
-
-        <h1>TimeLine Cinéma</h1>
     </header>
 
-    <hr class="clear"/>
-    <div id="handPlayer" class="hand">
-          <div class="cardContainer" id="cardContainer-0">
-              <div class="card" id="card-0">
-                  <div id="imgTarget-0" class="imgTarget"></div>
-                  <div class="getCardButton" id="getCardButton-0">
-                    <br/>
-                    Select<br/>a card
+    <div id="result">
+    </div>
+
+    <div class="row">
+
+        <div class="two columns" id="validAnswer">
+            <button id="validAnswerButton" class="button-primary">VALIDER LE CLASSEMENT</button>
+
+            <button class="button-primary partyButton" id="goOn">CONTINUER</button>
+
+            <button id="newGame" class="button-primary partyButton">RECOMMENCER</button>
+
+        </div>
+
+        <div id="handPlayer" class="hand ten columns">
+
+              <div class="cardContainer" id="cardContainer-0">
+                  <div class="card" id="card-0">
+                      <div id="imgTarget-0" class="imgTarget"></div>
+                      <div class="getCardButton" id="getCardButton-0">
+                        <br/>
+                        Select<br/>a card
+                      </div>
+                  </div>
+                  <div class="cardElement" id="cardElement-0">
                   </div>
               </div>
-              <div class="cardElement" id="cardElement-0">
-
-              </div>
-
-          </div>
-    </div>
-
-    <br/><br/>
-    <hr class="clear"/>
-
-    <div id="validAnswer">
-        <button id="validAnswerButton" class="button-primary">VALIDER LE CLASSEMENT</button>
-
-        <div id="result">
         </div>
-        <hr/>
-
-        <button class="button-primary partyButton" id="goOn">CONTINUER</button>
-
-        <button id="newGame" class="button-primary partyButton">RECOMMENCER</button>
 
     </div>
+
     <script src="js/config.js"></script>
 
     <script src="js/card.js"></script>

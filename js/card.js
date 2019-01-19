@@ -58,8 +58,7 @@ class Card {
 
   appendElementMovie()
   {
-      $('#'+this.containerId+' > .cardElement').html('<h6 style="font-weight: bold">'+this.title+'</h6>');
-      $('#'+this.containerId+' > .cardElement').append('<h7>'+this.releaseDateFormat+'</h7>');
+      $('#'+this.containerId+' > .cardElement').html('<h6>'+this.title+'</h6><br/>'+this.releaseDateFormat);
   }
 
 
