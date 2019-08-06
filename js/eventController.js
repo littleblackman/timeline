@@ -1,5 +1,3 @@
-
-
 class EventController
 {
     constructor(game)
@@ -47,6 +45,19 @@ class EventController
           game.findRandomMovie(card_id);
       })
 
+      $('.jokerButton').click(function(){
+          let card_id = $(this).attr('id').split('-')[1];
+          let card    = game.retrieveCard(card_id);
+          card.showCardElement();
+          game.jokerStock = game.jokerStock - 1;
+          $('#jokerStock').html(game.jokerStock);
+
+          if(game.jokerStock == 0)
+          {
+              $('.jokerButton').hide();
+          }
+      })
+
     }
 
     stopEvent() {
@@ -56,6 +67,7 @@ class EventController
       $('#handPlayer > .cardContainer > .card >.getCardButton').off('mouseenter');
       $('#handPlayer > .cardContainer > .card > .getCardButton').off('mouseleave');
       $('#handPlayer > .cardContainer > .card >.getCardButton').off('click');
+      $('.jokerButton').off('click');
       $('#validAnswerButton').off('click');
       $('#goOn').off('click');
       $('#newGame').off('click');
@@ -86,6 +98,11 @@ class EventController
         $('#newGame').click(function() {
             game.gameContinue();
         })
+
+        if(game.jokerStock > 0)
+        {
+            $('.jokerButton').show();
+        }
 
     }
 

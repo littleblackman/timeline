@@ -41,6 +41,8 @@ class Card {
     newCont.children(':first-child').children(':first-child').attr('id', 'imgTarget-' + this.id);
     newCont.children(':first-child').children(':first-child').next().attr('id', 'getCardButton-' + this.id);
     newCont.children('.cardElement').attr('id', 'cardElement-' + this.id);
+    newCont.children('.cardElement').next().attr('id', 'joker-' + this.id);
+
 
     $('#handPlayer').append(newCont);
   }
@@ -61,6 +63,10 @@ class Card {
       $('#'+this.containerId+' > .cardElement').html('<h6>'+this.title+'</h6><br/>'+this.releaseDateFormat);
   }
 
+  showCardElement()
+  {
+    $('#cardElement-'+this.id).show();
+  }
 
   rotate(element)
   {
@@ -79,8 +85,8 @@ class Card {
           'id': 'img'+this.id,
           'src': this.imgSrc ,
           'alt': 'poster',
-          'width': 300,
-          'height': 400,
+          'width': 250,
+          'height': 350,
       }).appendTo("#imgTarget-"+this.id).fadeIn();
 
   }

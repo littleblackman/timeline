@@ -1,9 +1,8 @@
-
-
 class GameManager
 {
-    constructor(handPlayer, moviedb, apiKey) {
+    constructor(handPlayer, moviedb, apiKey, mode) {
         this.eventController = new EventController(this);
+        this.myAnimation     = new AnimationElement();
         this.handPlayer = handPlayer;
         this.moviedb    = moviedb;
         this.apiKey     = apiKey;
@@ -13,16 +12,22 @@ class GameManager
         this.nbMovies = 0;
         this.win = 1;
 
-        this.point = 0;
-        this.round = 1;
-        this.limit = 3;
-        this.step = 20;
+        this.initValues();
 
-        // extend
-        this.limit2 = 4;
-        this.limit3 = 5;
-        this.limit4 = 6;
-        this.mode = 'prod';
+        this.mode = mode;
+
+        //this.startGame(this.eventController);
+    }
+
+    // initValues
+    initValues()
+    {
+        this.point  = 0;
+        this.round  = 1;
+        this.limit  = 3;
+        this.limit2 = 4
+        this.step   = 20;
+        this.jokerStock = 7;
     }
 
     // create the cards
@@ -123,8 +128,6 @@ class GameManager
 
         // show button validation
         $('#validAnswerButton').show();
-
-
     }
 
     // reset data when game continue
@@ -141,15 +144,13 @@ class GameManager
         }
 
         // restore cards
-        this.cards = new Array();;
+        this.cards = new Array();
 
         // remove img0
         $('#img0').remove();
 
         this.eventController.stopEvent();
 
-
-        $('#result').empty();
         $('.partyButton').hide();
 
         // start game
@@ -162,6 +163,13 @@ class GameManager
     {
 
         $('.cardElement').empty();
+
+        $('.jokerButton').hide();
+
+        $('#result').css('backgroundColor', "rgba(255, 255, 255, 0.90)");
+        $('#resultMessage').empty().show();
+
+        $('#jokerStock').html(this.jokerStock);
 
         $('#validAnswerButton').hide();
 
@@ -245,6 +253,8 @@ class GameManager
         let limit = this.limit;
         let game = this;
 
+        var targetcolor;
+
         // if win == 1
         if(win == 1)
         {
@@ -253,14 +263,9 @@ class GameManager
             round ++;
 
             // step and round
-            if(round > 5 && round < 9)  {
+            if(round > 6)  {
                 step = 25;
                 limit = game.limit2;
-            };
-
-            if(round >  9 ) {
-                step = 30;
-                limit = game.limit3;
             };
 
             if( round == 11 )
@@ -272,28 +277,32 @@ class GameManager
             resultMessage = '<h2>Gagné</h2>';
             $('#goOn').show();
 
+            targetcolor = "#82E765";
+
+            // update data
+            game.point = point;
+            game.round = round;
+            game.limit = limit;
+            game.step  = step;
+
+
         } else {
             // resultMessage
             resultMessage = '<h2>Perdu</h2>';
             $('#newGame').show();
 
             // init value
-            point = 0;
-            round = 1;
-            limit = 3;
-            step  = 20;
+            this.initValues();
 
+            targetcolor = "#E78865";
         }
 
         // show bar information result
         $('#validAnswerButton').hide();
-        $('#result').html(resultMessage);
+        this.myAnimation.swapColor('result', targetcolor);
+        this.myAnimation.showHtml('resultMessage', resultMessage);
 
-        // update data
-        this.point = point;
-        this.round = round;
-        this.limit = limit;
-        this.step  = step;
+
 
         this.showPointAndRound();
 

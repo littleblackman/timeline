@@ -16,61 +16,71 @@
 </head>
 <body>
     <header>
-
         <h1>ANACHRONIE MOVIE</h1>
+
+        <div>
+            <span id="jokerStock"></span>
+            <img src="assets/image/joker.png" alt="Joker" id="jokerMenu" title="Utiliser un joker pour avoir les informations de la carte"/>
+        </div>
 
         <div>
             <span class="gameTxt">Points</span>
             <span id="points" class="gameInfo">0</span>
         </div>
         <div>
-            <span class="gameTxt">Tours</span>
+            <span class="gameTxt">Niveau</span>
             <span id="round" class="gameInfo">1</span>
         </div>
     </header>
 
-    <div id="result">
+    <div id="result" class="row">
+        <div class="two columns">
+            <button id="validAnswerButton">VALIDER LE CLASSEMENT</button>
+            <button class="partyButton" id="goOn">CONTINUER</button>
+            <button id="newGame" class="partyButton">RECOMMENCER</button>
+        </div>
+        <div class="eight columns">
+            <div id="resultMessage"></div>
+        </div>
     </div>
 
-    <div class="row">
+    <br style="clear: both"/>
 
-        <div class="two columns" id="validAnswer">
-            <h2>ACTION</h2>
-            Sélectionnez un film pour chaque carte
-            <button id="validAnswerButton">VALIDER LE CLASSEMENT</button>
-
-            <button class="partyButton" id="goOn">CONTINUER</button>
-
-            <button id="newGame" class="partyButton">RECOMMENCER</button>
-
-        </div>
-
-        <div id="handPlayer" class="hand ten columns">
-
-              <div class="cardContainer" id="cardContainer-0">
-                  <div class="card" id="card-0">
-                      <div id="imgTarget-0" class="imgTarget"></div>
-                      <div class="getCardButton" id="getCardButton-0">
-                        <br/>
-                        Select<br/>a card
-                      </div>
-                  </div>
-                  <div class="cardElement" id="cardElement-0">
+    <div id="handPlayer" class="hand">
+          <div class="cardContainer" id="cardContainer-0">
+              <div class="card" id="card-0">
+                  <div id="imgTarget-0" class="imgTarget"></div>
+                  <div class="getCardButton" id="getCardButton-0">
+                    <br/>
+                    Cliquez<br/>ici!
                   </div>
               </div>
-        </div>
-
+              <div class="cardElement" id="cardElement-0">
+              </div>
+              <div id="joker-0" class="jokerButton">
+                  <img src="assets/image/joker.png" alt="Joker" class="jokerImgCard" title="Utiliser un joker pour voir les informations de la carte"/>
+              </div>
+          </div>
     </div>
 
-    <script src="js/config.js"></script>
+    <div id="validAnswer">
+        <h2>ACTION</h2>
+        Sélectionnez un film pour chaque carte.
+        Classez les dans l'ordre chronologique.
+        Et validez votre choix.<br/>
+        <b>Continuez pour atteindre le niveau 10</b>
+        <br/>
+        besoin d'un coup de pouce ?
+        Cliquez sur le Joker ;-)
+    </div>
 
+
+    <script src="js/config.js"></script>
     <script src="js/card.js"></script>
     <script src="js/eventController.js"></script>
-
+    <script src="js/myAnimation.js"></script>
     <script src="js/gameManager.js"></script>
     <script src="js/main.js"></script>
-
-
 
 </body>
 </html>
